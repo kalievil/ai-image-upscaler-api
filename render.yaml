@@ -1,0 +1,15 @@
+services:
+  # A web service
+  - type: web
+    name: ai-image-upscaler-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -k uvicorn.workers.UvicornWorker --log-level info render_app:app -b 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.9
+      - key: RAPIDAPI_KEY
+        sync: false # will be manually set
+      - key: RENDER_ENV
+        value: preview 
